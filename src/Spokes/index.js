@@ -24,17 +24,21 @@ export default class Spokes {
 
   registerLifecycleEvent(name, executor) {
     console.log('registerLifecycleEvent', name, 'executor()');
-    this.lifecycleEvents.add(name, (resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       executor((...args) => {
         resolve(...args);
         this.publish(name, ...args);
       }, reject);
     });
+
+    this.lifecycleEvents.add(name, promise);
+
+    return promise;
   }
 
   lifecycle(name) {
     if (this.lifecycleEvents.has(name)) {
-      return new Promise(this.lifecycleEvents.fetch(name));
+      return this.lifecycleEvents.fetch(name);
     }
   }
 
