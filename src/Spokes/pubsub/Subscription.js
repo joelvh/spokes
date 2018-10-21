@@ -1,3 +1,6 @@
+import log from '../dom/log';
+import error from '../dom/error';
+
 export default class Subscription {
   constructor(topic, handler) {
     this.topic = topic;
@@ -13,16 +16,16 @@ export default class Subscription {
 
   publish(...payload) {
     if (!this.unsubscribed) {
-      console.log('Subscription('+this.topic.name+') => publish', ...payload);
+      log('Subscription('+this.topic.name+') => publish', ...payload);
       try {
         this.handler(...payload, this);
         return true;
       } catch(ex) {
-        console.error(ex);
+        error(ex);
         return ex;
       }
     } else {
-      console.log('Subscription('+this.topic.name+') => publish (unsubscribed)', ...payload);
+      log('Subscription('+this.topic.name+') => publish (unsubscribed)', ...payload);
       return false;
     }
   }

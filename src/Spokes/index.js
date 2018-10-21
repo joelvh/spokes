@@ -2,6 +2,7 @@ import List from './lib/List';
 import ValueStack from './lib/ValueStack';
 import PageLoad from './events/PageLoad';
 import parseQueryString from './parseQueryString';
+import log from './dom/log';
 
 export default class Spokes {
   constructor({ document, broker }) {
@@ -23,7 +24,7 @@ export default class Spokes {
   // Lifecycle event resolving
 
   registerLifecycleEvent(name, executor) {
-    console.log('registerLifecycleEvent', name, 'executor()');
+    log('registerLifecycleEvent', name, 'executor()');
     const promise = new Promise((resolve, reject) => {
       executor((...args) => {
         resolve(...args);
@@ -45,15 +46,15 @@ export default class Spokes {
   // State
 
   setState(name, value) {
-    console.log('setState', name, value);
+    log('setState', name, value);
     this.state.append(name, value);
     this.broker.publish('StateChanged', name, value);
     this.broker.publish('StateChanged:'+name, value);
   }
 
   getState(name) {
-    console.log('getState', name);
-    console.log('this.state.fetch('+name+')', this.state.fetch(name));
+    log('getState', name);
+    log('this.state.fetch('+name+')', this.state.fetch(name));
     return this.state.fetch(name).pop();
   }
 

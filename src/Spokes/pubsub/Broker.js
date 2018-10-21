@@ -1,12 +1,18 @@
 import List from '../lib/List';
 import Topic from './Topic';
-import ValueStack from '../lib/ValueStack';
+// import ValueStack from '../lib/ValueStack';
 
 const GLOBAL_TOPIC = '*';
+const DEFAULT_OPTIONS = Topic.defaultOptions;
 
 export default class Broker {
-  constructor() {
+  static get defaultOptions() {
+    return DEFAULT_OPTIONS;
+  }
+
+  constructor({ keepHistory = DEFAULT_OPTIONS.keepHistory } = {}) {
     this.topics = new List();
+    this.keepHistory = keepHistory;
     // this.history = new ValueStack();
   }
 
@@ -16,7 +22,7 @@ export default class Broker {
     if (this.topics.has(topicName)) {
       topic = this.topics.fetch(topicName);
     } else {
-      topic = this.topics.add(topicName, new Topic(topicName));
+      topic = this.topics.add(topicName, new Topic(topicName, { keepHistory: this.keepHistory }));
       
       if (topicName !== GLOBAL_TOPIC) {
         topic.subscribe((...args) => {

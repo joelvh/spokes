@@ -26,6 +26,8 @@ Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spo
 - Add GTM Data Layer integration
 - Add common analytics event integration (e.g. `track` and `identify`)
 - Add React integration to coordinate between webpage (e.g. `window._spokes`) and React components (or other SPA frameworks)
+- Evaluate if we use [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) (and related polyfill) rather than the [ValueStack](./src/Spokes/lib/ValueStack.js) internals
+- Evaluate  if we use [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) (and related polyfill) rather than the [List](./src/Spokes/lib/List.js) internals
 
 ## Getting Started
 
