@@ -7,6 +7,11 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 - **Lifecycle events** are automatically processed on page load and events are published to notify about `PageLoaded` and `UTMLoaded`.
 - **Promises** allow resolving lifecycle events, even if they've already ocurred, in order to retrieve the related data as needed. Note, however, that lifecycle events arre also published and can be subscribed to as-they-happen with pub/sub.
 
+## Development
+
+- Run `npm run start` to view the [demo](./src/demo.js).
+- Run `npm run build` to build the bundle for production.
+
 ## Setup
 
 Setup is pretty straight forward. You need an instance of `Spokes` that is shared by all components that need to communicate with each other.
