@@ -9,6 +9,7 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 
 ## Development
 
+- Run `npm install` to get all dependencies installed.
 - Run `npm run start` to view the [demo](./src/demo.js).
     - Then click this demo link with UTM parameters: http://localhost:8080/?utm_campaign=my%20campaign&utm_medium=email
 - Run `npm run build` to build the bundle for production.
