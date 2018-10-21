@@ -7,6 +7,10 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 - **Lifecycle events** are automatically processed on page load and events are published to notify about `PageLoaded` and `UTMLoaded`.
 - **Promises** allow resolving lifecycle events, even if they've already ocurred, in order to retrieve the related data as needed. Note, however, that lifecycle events arre also published and can be subscribed to as-they-happen with pub/sub.
 
+## Install
+
+Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spokes) to your project (package.json).
+
 ## Development
 
 - Run `npm install` to get all dependencies installed.
@@ -23,7 +27,7 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 - Add common analytics event integration (e.g. `track` and `identify`)
 - Add React integration to coordinate between webpage (e.g. `window._spokes`) and React components (or other SPA frameworks)
 
-## Setup
+## Getting Started
 
 Setup is pretty straight forward. You need an instance of `Spokes` that is shared by all components that need to communicate with each other.
 
@@ -80,10 +84,11 @@ spokes.publish('UserRegistered', 'John', 'Doe', { email: 'john@doe.com', phone: 
 It's simple to manage global state by utilizing a key/value store. Any key that is added or value that is updated emits a `StateChanged` event. An event is also emitted for each key, so if you have a `UserProfile` key, then the `StateChanged:UserProfile` event can also be subscribed to for changes.
 
 ```es6
-// subscribe to changes to global state
+// Subscribe to changes to global state
 spokes.subscribe('StateChanged:UserProfile', value => console.log('UTM changed', value));
 
-// update the global state, which will publish both `StateChanged` and `StateChanged:UserProfile` events.
+// Update the global state, which will publish both `StateChanged` 
+// and `StateChanged:UserProfile` events.
 spokes.setState('UserProfile', { name: 'John Doe', email: 'john@doe.com' });
 
 // get the latest value
@@ -97,9 +102,10 @@ Page lifecycle events differ slightly from publish/subscribe events because they
 Built-in lifecycle events are `PageLoaded` and `UTMLoaded`.
 
 ```es6
-// You may want to know when the page is loaded. This can  be called at any time and the value will
-// be passed to the callback when it's available. This is different from subscribing to pub/sub
-// because if you subscribe too late, you may miss events.
+// You may want to know when the page is loaded. This can  be called
+// at any time and the value will be passed to the callback when it's
+//  available. This is different from subscribing to pub/sub because
+// if you subscribe too late, you may miss events.
 spokes.lifecycle('PageLoaded').then((...payload) => console.log('PageLoaded resolved', ...payload));
 
 // Here's an example of registering a lifecycle event, such  as telling other components
@@ -115,10 +121,12 @@ spokes.registerLifecycleEvent('SPALoaded', (resolve, reject) => {
   }
 });
 
-// Another ecommerce-related lifecycle event might be `CheckoutCompleted`, if it doesn't happen more than once per page load.
+// Another ecommerce-related lifecycle event might be `CheckoutCompleted`,
+// if it doesn't happen more than once per page load.
 spokes.registerLifecycleEvent('CheckoutCompleted', (resolve, reject) => { /*...*/ });
 
-// Note that we are using the `Promise` class, which allows you to subscribe to the result with `then`.
+// Note that we are using the `Promise` class, which allows you to
+// subscribe to the result with `then`.
 // You can also subscribe to a failure with `catch`.
 ```
 
