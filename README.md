@@ -45,7 +45,7 @@ const spokes = new Spokes({
 window._spokes = spokes;
 ```
 
-## Publish/Subscribe Events
+### Publish/Subscribe Events
 
 You can easily  coordinate events and data between  components with publish/subscribe. Let's start with subscribing.
 
@@ -75,7 +75,7 @@ You can publish events to notify other components of what's occurred.
 spokes.publish('UserRegistered', 'John', 'Doe', { email: 'john@doe.com', phone: '123-456-7890' });
 ```
 
-## Global State & State Changes
+### Global State & State Changes
 
 It's simple to manage global state by utilizing a key/value store. Any key that is added or value that is updated emits a `StateChanged` event. An event is also emitted for each key, so if you have a `UserProfile` key, then the `StateChanged:UserProfile` event can also be subscribed to for changes.
 
@@ -90,7 +90,7 @@ spokes.setState('UserProfile', { name: 'John Doe', email: 'john@doe.com' });
 const userProfile = spokes.getState('UserProfile');
 ```
 
-## Page Lifecycle Events
+### Page Lifecycle Events
 
 Page lifecycle events differ slightly from publish/subscribe events because they are triggered once per page. These events can be registered and then resolved using a `Promise`. No matter when you "subscribe" to the event, you'll receive a value whether the value was already  resolved or has yet to be resolved. Note, however, that they do also publish an event with pub/sub when  initally resolved, for any subscribers to the event. (Pub/sub is the underlying event handling that drives Spokes.js.)
 
@@ -114,6 +114,9 @@ spokes.registerLifecycleEvent('SPALoaded', (resolve, reject) => {
     reject(/*...*/);
   }
 });
+
+// Another ecommerce-related lifecycle event might be `CheckoutCompleted`, if it doesn't happen more than once per page load.
+spokes.registerLifecycleEvent('CheckoutCompleted', (resolve, reject) => { /*...*/ });
 
 // Note that we are using the `Promise` class, which allows you to subscribe to the result with `then`.
 // You can also subscribe to a failure with `catch`.
