@@ -2,13 +2,10 @@
 
 Spokes.js facilitates coordinating events between webpage lifecycle events and single-page applications (SPAs) or third party analytics platforms (e.g. Google Tag Manager's data layer).
 
-**Pub/sub events** allow for the basis of coordinating events and payloads between components.
-
-**State change events** are published to indicate when global state data is updated.
-
-**Lifecycle events** are automatically processed on page load and events are published to notify about `PageLoaded` and `UTMLoaded`.
-
-**Promises** allow resolving lifecycle events, even if they've already ocurred, in order to retrieve the related data as needed. Note, however, that lifecycle events arre also published and can be subscribed to as-they-happen with pub/sub.
+- **Pub/sub events** allow for the basis of coordinating events and payloads between components.
+- **State change events** are published to indicate when global state data is updated.
+- **Lifecycle events** are automatically processed on page load and events are published to notify about `PageLoaded` and `UTMLoaded`.
+- **Promises** allow resolving lifecycle events, even if they've already ocurred, in order to retrieve the related data as needed. Note, however, that lifecycle events arre also published and can be subscribed to as-they-happen with pub/sub.
 
 ## Setup
 
@@ -24,7 +21,7 @@ import window from 'Spokes/dom/window';
 const spokes = new Spokes({
   // the document to load
   document: document,
-  // facilitates publish/subscrribe
+  // facilitates publish/subscribe
   broker: new Broker()
 });
 
@@ -101,5 +98,8 @@ spokes.registerLifecycleEvent('SPALoaded', (resolve, reject) => {
     reject(/*...*/);
   }
 });
+
+// Note that we are using the `Promise` class, which allows you to subscribe to the result with `then`.
+// You can also subscribe to a failure with `catch`.
 ```
 
