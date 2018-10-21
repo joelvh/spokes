@@ -12,6 +12,13 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 - Run `npm run start` to view the [demo](./src/demo.js).
 - Run `npm run build` to build the bundle for production.
 
+### TODO
+
+- Polyfills for ES6 and other browser things that may not be supported by all (e.g. `Promise`)
+- Add GTM Data Layer integration
+- Add common analytics event integration (e.g. `track` and `identify`)
+- Add React integration to coordinate between webpage (e.g. `window._spokes`) and React components (or other SPA frameworks)
+
 ## Setup
 
 Setup is pretty straight forward. You need an instance of `Spokes` that is shared by all components that need to communicate with each other.
