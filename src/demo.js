@@ -1,12 +1,8 @@
-import Broker from './Spokes/pubsub/Broker';
-import Spokes from './Spokes';
 import window from './Spokes/dom/window';
 import document from './Spokes/dom/document';
+import './main';
 
-const spokes = new Spokes({
-    document: document,
-    broker: new Broker()
-});
+const spokes = window._spokes;
 
 // Demo subscribing to lifecycle event
 
@@ -52,5 +48,3 @@ spokes.subscribeAll((eventName, ...payload) => {
 
     document.getElementById('list').appendChild(tr);
 })
-
-window._spokes = spokes;

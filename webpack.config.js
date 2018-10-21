@@ -19,11 +19,14 @@ module.exports = {
   devtool: 'source-map',
 
   // your web-specific entry file
-  entry: path.resolve(appDirectory, 'src/demo.js'),
+  entry: {
+    demo: path.resolve(appDirectory, 'src/demo.js'),
+    main: path.resolve(appDirectory, 'src/main.js')
+  },
 
   // configures where the build ends up
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(appDirectory, 'build'),
     publicPath: '/js/'
   },
