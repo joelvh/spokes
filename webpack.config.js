@@ -1,5 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const CompressionPlugin = require("compression-webpack-plugin");
+const ShakePlugin = require('webpack-common-shake').Plugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const appDirectory = path.resolve(__dirname, './');
 
@@ -31,6 +34,20 @@ module.exports = {
     publicPath: '/js/'
   },
 
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        parallel: true,
+        sourceMap: true,   // enable source maps to map errors (stack traces) to modules
+        uglifyOptions: {
+          output: {
+            comments: false, // remove all comments
+          }
+        }
+      })
+    ]
+  },
+
   module: {
     rules: [
       {
@@ -55,6 +72,9 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
       __DEV__: !production,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new ShakePlugin(),
+    new CompressionPlugin(),
   ],
 
   stats: {
