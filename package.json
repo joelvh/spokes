@@ -1,6 +1,6 @@
 {
   "name": "spokes",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Pub/sub for coordinating webpage events with frameworks and 3rd parties",
   "homepage": "https://github.com/joelvh/spokes",
   "author": "Joel Van Horn",
@@ -53,8 +53,5 @@
     "webpack-common-shake": "^2.1.0",
     "webpack-dev-server": "^3.1.9"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "core-js": "^2.5.7"
-  }
+  "dependencies": {}
 }

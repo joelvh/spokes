@@ -23,7 +23,6 @@ module.exports = {
 
   // your web-specific entry file
   entry: {
-    polyfill: path.resolve(appDirectory, 'src/loaders/polyfill.js'),
     demo: path.resolve(appDirectory, 'src/loaders/demo.js'),
     main: path.resolve(appDirectory, 'src/loaders/main.js')
   },
