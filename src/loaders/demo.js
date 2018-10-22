@@ -1,6 +1,6 @@
-import window from './Spokes/dom/window';
-import document from './Spokes/dom/document';
-import debug from './Spokes/dom/debug';
+import window from '../dom/window';
+import document from '../dom/document';
+import debug from '../dom/debug';
 import './main';
 
 const spokes = window._spokes;

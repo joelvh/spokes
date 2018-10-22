@@ -12,8 +12,7 @@
   "bugs": {
     "url": "https://github.com/joelvh/spokes/issues"
   },
-  "main": "src/main.js",
-  "demo": "src/demo.js",
+  "main": "src/Spokes/index.js",
   "scripts": {
     "webpack-serve": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
     "webpack-build": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",

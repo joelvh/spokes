@@ -16,7 +16,7 @@ const entryName = process.env.ENTRY || 'main';
 const openBrowser = process.env.OPEN === 'true';
 
 export default {
-  input: 'src/'+entryName+'.js',
+  input: 'src/loaders/'+entryName+'.js',
   output: {
     name: 'spokes',
     file: 'build/rollup/js/'+entryName+'.bundle.js',

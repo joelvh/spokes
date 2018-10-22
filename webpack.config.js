@@ -23,9 +23,9 @@ module.exports = {
 
   // your web-specific entry file
   entry: {
-    polyfill: path.resolve(appDirectory, 'src/polyfill.js'),
-    demo: path.resolve(appDirectory, 'src/demo.js'),
-    main: path.resolve(appDirectory, 'src/main.js')
+    polyfill: path.resolve(appDirectory, 'src/loaders/polyfill.js'),
+    demo: path.resolve(appDirectory, 'src/loaders/demo.js'),
+    main: path.resolve(appDirectory, 'src/loaders/main.js')
   },
 
   // configures where the build ends up
