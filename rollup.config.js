@@ -12,14 +12,17 @@ import gzipPlugin from 'rollup-plugin-gzip';
 import hash from 'rollup-plugin-hash';
 import livereload from 'rollup-plugin-livereload';
 
+const entryName = process.env.ENTRY || 'main';
+const openBrowser = process.env.OPEN === 'true';
+
 export default {
-  input: 'src/demo.js',
+  input: 'src/'+entryName+'.js',
   output: {
     name: 'spokes',
-    file: 'build/rollup/js/demo.bundle.js',
+    file: 'build/rollup/js/'+entryName+'.bundle.js',
     format: 'iife',
     sourcemap: true,
-    sourcemapFile: 'build/rollup/js/demo.bundle.js.map',
+    sourcemapFile: 'build/rollup/js/'+entryName+'.bundle.js.map',
   },
   plugins: [
     babel({
@@ -32,21 +35,16 @@ export default {
     }),
     commonjs(),
     hash({ 
-      dest: 'build/rollup/js/demo.bundle-[hash].js',
-      replace: true
+      dest: 'build/rollup/js/'+entryName+'.bundle-[hash].js',
+      replace: false
     }),
     sizeSnapshot(),
-    visualizer({
-      open: true, // open browser
-      filename: './build/rollup/demo-stats.html',
-      // sourcemap: true
-    }),
     uglify({
       sourcemap: true,
       toplevel: true
     }),
     gzipPlugin(),
-    serve({
+    openBrowser && serve({
       open: true, // open browser
       contentBase: ['public', 'build/rollup'],
       host: 'localhost',

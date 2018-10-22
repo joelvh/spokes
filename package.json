@@ -15,9 +15,11 @@
   "main": "src/main.js",
   "demo": "src/demo.js",
   "scripts": {
-    "start": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
-    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
-    "rollup": "rollup -c rollup.config.js --external all"
+    "webpack-serve": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
+    "webpack-build": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
+    "rollup-serve": "ENTRY=demo OPEN=true rollup -c rollup.config.js --external all",
+    "rollup-build": "rollup -c rollup.config.js --external all && ENTRY=demo rollup -c rollup.config.js --external all",
+    "build": "npm run webpack-build && npm run rollup-build"
   },
   "browserslist": [
     "ie 11"
