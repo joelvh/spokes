@@ -1,30 +1,24 @@
 import List from './lib/List';
 import ValueStack from './lib/ValueStack';
-import PageLoad from './events/PageLoad';
-import parseQueryString from './parseQueryString';
-import log from './dom/log';
+import Broker from './pubsub/Broker';
+import debug from './dom/debug';
 
 export default class Spokes {
-  constructor({ document, broker }) {
-    this.broker = broker;
-    
+  constructor() {
+    this.broker = new Broker();
     this.lifecycleEvents= new List();
-    this.state = new ValueStack();
-
-    // Setup page lifecycle
-    
-    this.registerLifecycleEvent('PageLoaded', new PageLoad(document).executor);
-    this.registerLifecycleEvent('UTMLoaded', (resolve, reject) => {
-      this.lifecycle('PageLoaded').then(document => resolve(parseQueryString(document.location.search))).catch(reject);
-    });
-
-    this.lifecycle('UTMLoaded').then(qs => this.setState('UTM', qs));
+    this.stateStack = new ValueStack();
   }
 
   // Lifecycle event resolving
 
+  register(lifecycle) {
+    debug('register', lifecycle.constructor.name);
+    lifecycle.register(this);
+  }
+
   registerLifecycleEvent(name, executor) {
-    log('registerLifecycleEvent', name, 'executor()');
+    debug('registerLifecycleEvent', name);
     const promise = new Promise((resolve, reject) => {
       executor((...args) => {
         resolve(...args);
@@ -40,22 +34,23 @@ export default class Spokes {
   lifecycle(name) {
     if (this.lifecycleEvents.has(name)) {
       return this.lifecycleEvents.fetch(name);
+    } else {
+      throw new Error('Unknown lifecycle event name given: '+name);
     }
   }
 
   // State
 
   setState(name, value) {
-    log('setState', name, value);
-    this.state.append(name, value);
+    debug('setState', name, value);
+    this.stateStack.append(name, value);
     this.broker.publish('StateChanged', name, value);
     this.broker.publish('StateChanged:'+name, value);
   }
 
   getState(name) {
-    log('getState', name);
-    log('this.state.fetch('+name+')', this.state.fetch(name));
-    return this.state.fetch(name).pop();
+    debug('getState', name);
+    return this.stateStack.fetch(name).pop();
   }
 
   // Pub/Sub

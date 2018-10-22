@@ -1,4 +1,4 @@
-import log from '../dom/log';
+import debug from '../dom/debug';
 import error from '../dom/error';
 
 export default class Subscription {
@@ -16,7 +16,7 @@ export default class Subscription {
 
   publish(...payload) {
     if (!this.unsubscribed) {
-      log('Subscription('+this.topic.name+') => publish', ...payload);
+      debug('Subscription('+this.topic.name+')', 'publish', ...payload);
       try {
         this.handler(...payload, this);
         return true;
@@ -25,7 +25,7 @@ export default class Subscription {
         return ex;
       }
     } else {
-      log('Subscription('+this.topic.name+') => publish (unsubscribed)', ...payload);
+      debug('Subscription('+this.topic.name+')', 'publish(unsubscribed)', ...payload);
       return false;
     }
   }

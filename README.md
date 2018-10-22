@@ -4,7 +4,7 @@ Spokes.js facilitates coordinating events between webpage lifecycle events and s
 
 - **Pub/sub events** allow for the basis of coordinating events and payloads between components.
 - **State change events** are published to indicate when global state data is updated.
-- **Lifecycle events** are automatically processed on page load and events are published to notify about `PageLoaded` and `UTMLoaded`.
+- **Lifecycle events** are automatically processed on page load and events are published to notify about `Page:Loaded` and `Page:QueryStringParsed`.
 - **Promises** allow resolving lifecycle events, even if they've already ocurred, in order to retrieve the related data as needed. Note, however, that lifecycle events arre also published and can be subscribed to as-they-happen with pub/sub.
 
 ## Install
@@ -35,17 +35,15 @@ Setup is pretty straight forward. You need an instance of `Spokes` that is share
 
 ```es6
 import Spokes from 'Spokes';
-import Broker from 'Spokes/pubsub/Broker';
-import document from 'Spokes/dom/document';
+import Page from 'Spokes/lifecycle/Page';
 import window from 'Spokes/dom/window';
+import document from 'Spokes/dom/document';
 
-// Crate a global instance to use by your SPA or analytics data layer
-const spokes = new Spokes({
-  // the document to load
-  document: document,
-  // facilitates publish/subscribe
-  broker: new Broker()
-});
+// Create a global instance to use by your SPA or analytics data layer
+const spokes = new Spokes();
+
+// Register the Page lifecycle
+spokes.register(new Page(document));
 
 // You could make this a global variable
 window._spokes = spokes;
@@ -53,17 +51,17 @@ window._spokes = spokes;
 
 ### Publish/Subscribe Events
 
-You can easily  coordinate events and data between  components with publish/subscribe. Let's start with subscribing.
+You can easily coordinate events and data between components with publish/subscribe. Let's start with subscribing.
 
 ```es6
 // Subscribe to the page load event that Spokes emits automatically.
 // Note that the last argument is a `Subscription` instance, which
 // allows you to call `subscription.unsubscribe()` to unsubscribe.
-spokes.subscribe('PageLoaded', (document, subscription) => console.log('PageLoaded fired', document));
+spokes.subscribe('Page:Loaded', (document, subscription) => console.log('Page:Loaded fired', document));
 
 // You can also subscribe and receive the last event in case you missed it
-spokes.subscribe('PageLoaded', document => {
-  console.log('PageLoaded fired', document);
+spokes.subscribe('Page:Loaded', document => {
+  console.log('Page:Loaded fired', document);
 }, {
   // Add the option to receive the last event
   withLastEvent: true
@@ -87,7 +85,7 @@ It's simple to manage global state by utilizing a key/value store. Any key that 
 
 ```es6
 // Subscribe to changes to global state
-spokes.subscribe('StateChanged:UserProfile', value => console.log('UTM changed', value));
+spokes.subscribe('StateChanged:UserProfile', value => console.log('User info changed', value));
 
 // Update the global state, which will publish both `StateChanged` 
 // and `StateChanged:UserProfile` events.
@@ -97,18 +95,23 @@ spokes.setState('UserProfile', { name: 'John Doe', email: 'john@doe.com' });
 const userProfile = spokes.getState('UserProfile');
 ```
 
-### Page Lifecycle Events
+### Lifecycle Events
 
-Page lifecycle events differ slightly from publish/subscribe events because they are triggered once per page. These events can be registered and then resolved using a `Promise`. No matter when you "subscribe" to the event, you'll receive a value whether the value was already  resolved or has yet to be resolved. Note, however, that they do also publish an event with pub/sub when  initally resolved, for any subscribers to the event. (Pub/sub is the underlying event handling that drives Spokes.js.)
+Lifecycle events differ slightly from publish/subscribe events because they are triggered once. These events are registered and then resolved using a `Promise`. No matter when you "subscribe" to the event, you'll receive a value whether the value was resolved previously or has yet to be resolved. Note, however, that these events are also published with pub/sub when resolved the first time, for any pub/sub subscribers of the event. (Pub/sub is the underlying event handling that drives Spokes.js.)
 
-Built-in lifecycle events are `PageLoaded` and `UTMLoaded`.
+Built-in lifecycle events are `Page:Loaded` and `Page:QueryStringParsed`. These lifecycle events are registered individually or you can register an  object that responds to the `register` method. The default lifecycle for the page is encapsulated in `new Page()` and registered with the `Spokes` instance.
 
 ```es6
+// As seen above, we can register a lifecycle like this.
+spokes.register(new Page(document));
+
+// Within that `register` method, the following types of things are done:
+
 // You may want to know when the page is loaded. This can  be called
 // at any time and the value will be passed to the callback when it's
 //  available. This is different from subscribing to pub/sub because
 // if you subscribe too late, you may miss events.
-spokes.lifecycle('PageLoaded').then((...payload) => console.log('PageLoaded resolved', ...payload));
+spokes.lifecycle('Page:Loaded').then((...payload) => console.log('Page:Loaded resolved', ...payload));
 
 // Here's an example of registering a lifecycle event, such  as telling other components
 // when your SPA is loaded and  ready.

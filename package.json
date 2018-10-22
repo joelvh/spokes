@@ -1,6 +1,6 @@
 {
   "name": "spokes",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Pub/sub for coordinating webpage events with frameworks and 3rd parties",
   "homepage": "https://github.com/joelvh/spokes",
   "author": "Joel Van Horn",
@@ -12,11 +12,14 @@
   "bugs": {
     "url": "https://github.com/joelvh/spokes/issues"
   },
-  "main": "index.js",
+  "main": "src/Spokes/index.js",
+  "module": "src/Spokes/index.js",
   "scripts": {
     "start": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
     "build": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map"
   },
+  "browserslist": [
+    "ie 11"
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -24,11 +27,15 @@
     "babel-loader": "^8.0.4",
     "compression-webpack-plugin": "^2.0.0",
     "http-server": "^0.11.1",
+    "rollup-plugin-babel": "^4.0.3",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.22.0",
     "webpack-cli": "^3.1.2",
     "webpack-common-shake": "^2.1.0",
     "webpack-dev-server": "^3.1.9"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "core-js": "^2.5.7"
+  }
 }

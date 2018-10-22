@@ -1,23 +1,34 @@
 import window from './Spokes/dom/window';
 import document from './Spokes/dom/document';
+import debug from './Spokes/dom/debug';
 import './main';
 
 const spokes = window._spokes;
 
-// Demo subscribing to lifecycle event
+/*
+    Register lifecycles
+*/
 
-spokes.lifecycle('UTMLoaded').then(qs => console.log('DEMO: lifecycle loaded UTMLoaded:', qs));
+window.dataLayer = [];
+
+/*
+    Demo subscribing to lifecycle event
+*/
+
+spokes.lifecycle('Page:QueryStringParsed').then(qs => debug('DEMO: lifecycle loaded Page:QueryStringParsed:', qs));
 
 // Demo subscribing to pub/sub event, specifically a state change for a specific value
 
-spokes.subscribe('StateChanged:UTM', () => {
-    spokes.getState('UTM').pairs().forEach(pair => {
+spokes.subscribe('StateChanged:QueryString', () => {
+    spokes.getState('QueryString').pairs().forEach(pair => {
         const [key, values] = pair;
-        values.forEach(value => console.log('DEMO: [UTM]', key, '=>', value));
+        values.forEach(value => debug('DEMO: [QueryString]', key, '=>', value));
     });
 });
 
-// Demo output of all events published on page
+/*
+    Demo output of all events published on page
+*/
 
 spokes.subscribeAll((eventName, ...payload) => {
     // remove subscription, which is passed to unsubscribe

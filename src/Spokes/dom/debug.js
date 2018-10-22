@@ -1,3 +1,3 @@
 import console from './console';
 
-export default console.log;
+export default console.debug;

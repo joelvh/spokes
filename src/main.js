@@ -1,8 +1,10 @@
-import Spokes from './Spokes';
-import Broker from './Spokes/pubsub/Broker';
+import window from './Spokes/dom/window';
 import document from './Spokes/dom/document';
+import Spokes from './Spokes/index';
+import Page from './Spokes/lifecycle/Page';
 
-window._spokes = new Spokes({
-    document: document,
-    broker: new Broker()
-});
+const spokes = new Spokes();
+
+spokes.register(new Page(document));
+
+window._spokes = spokes;
