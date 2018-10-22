@@ -1,34 +1,39 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import pkg from './package.json';
+import babel from 'rollup-plugin-babel';
+import { uglify } from "rollup-plugin-uglify";
+import serve from 'rollup-plugin-serve';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import visualizer from 'rollup-plugin-visualizer';
 
-export default [
-	// browser-friendly UMD build
-	{
-		input: 'src/main.js',
-		output: {
-			name: 'spokesBundle',
-			file: pkg.browser,
-			format: 'umd'
-		},
-		plugins: [
-			resolve(), // so Rollup can find `ms`
-			commonjs() // so Rollup can convert `ms` to an ES module
-		]
-	},
-
-	// CommonJS (for Node) and ES module (for bundlers) build.
-	// (We could have three entries in the configuration array
-	// instead of two, but it's quicker to generate multiple
-	// builds from a single configuration where possible, using
-	// an array for the `output` option, where we can specify 
-	// `file` and `format` for each target)
-	{
-		input: 'src/main.js',
-		external: ['ms'],
-		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
-		]
-	}
-];
+export default {
+  input: 'src/demo.js',
+  output: {
+    file: 'build/rollup/js/demo.bundle.js',
+    format: 'iife'
+  },
+  name: 'spokes',
+  plugins: [
+    babel({
+      exclude: 'node_modules/**'
+    }),
+    resolve(),
+    commonjs(),
+    sizeSnapshot(),
+    visualizer({
+      open: true, // open browser
+      filename: './build/rollup/statistics.html',
+      // sourcemap: true
+    }),
+    uglify({
+      sourcemap: true,
+      toplevel: true
+    }),
+    serve({
+      open: true, // open browser
+      contentBase: ['public', 'build/rollup'],
+      host: 'localhost',
+      port: 8080
+    })
+  ]
+};

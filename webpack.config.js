@@ -31,7 +31,7 @@ module.exports = {
   // configures where the build ends up
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(appDirectory, 'build'),
+    path: path.resolve(appDirectory, 'build/webpack/js'),
     publicPath: '/js/'
   },
 
