@@ -1,3 +1,7 @@
+/*
+  See: https://www.simoahava.com/analytics/100-google-tag-manager-learnings/
+*/
+
 export default class DataLayer {
   constructor(window) {
     this.window = window;
