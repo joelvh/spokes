@@ -3,10 +3,9 @@ import Page from './src/Lifecycle/Page';
 import User from './src/Lifecycle/User';
 import Analytics from './src/Lifecycle/Analytics';
 
-export {
+export default {
+  Spokes,
   Page,
   User,
   Analytics
 };
-
-export default Spokes;
