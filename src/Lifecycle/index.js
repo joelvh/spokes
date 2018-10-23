@@ -17,9 +17,9 @@ export default class Lifecycle {
     }
 
     const promise = new Promise((resolve, reject) => {
-      executor((data) => {
-        resolve(data);
-        this.topic.publish(name, data);
+      executor((value) => {
+        resolve(value);
+        this.topic.publish(name, value);
       }, reject);
     });
 
@@ -28,13 +28,13 @@ export default class Lifecycle {
     return promise;
   }
 
-  when(event) {
-    debug('Lifecycle.when', event);
+  when(name) {
+    debug('Lifecycle.when', name);
     
-    if (!this.events.has(event)) {
-      throw new Error('Unknown lifecycle event name: '+event);
+    if (!this.events.has(name)) {
+      throw new Error('Unknown lifecycle event name: '+name);
     }
 
-    return this.events.fetch(event);
+    return this.events.fetch(name);
   }
 }

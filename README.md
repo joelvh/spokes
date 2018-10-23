@@ -52,15 +52,15 @@ window._spokes = spokes;
 
 ### Publish/Subscribe Events
 
-You can easily coordinate events and data between components with publish/subscribe. Events are published to topics, and you can subscribe to topics. Within the payload data are `topic`, `event` and `data`.
+You can easily coordinate events and data between components with publish/subscribe. Events are published to topics, and you can subscribe to topics. Within the payload value are `topic`, `key` and `value`.
 
 ```es6
 // Subscribe to the `Page` lifecycle topic and filter on the load event that
 // Spokes emits automatically. Note that the last argument is a
 // `Subscription` instance, which allows you to call
 // `subscription.unsubscribe()` to unsubscribe.
-spokes.subscribe('Page', ({ topic, event, data }, subscription) => {
-  if (event == 'Loaded') console.log('Page:Loaded fired', data);
+spokes.subscribe('Page', ({ topic, event, value }, subscription) => {
+  if (event == 'Loaded') console.log('Page:Loaded fired', value);
 });
 
 // You can also subscribe and receive the last event published to the
@@ -70,10 +70,10 @@ spokes.subscribe('Page', document => {
 }, { withLastEvent: true });
 
 // Alternatively, subscribe to all topics. In this case,
-// the original event is nested inside the payload's `data` property.
+// the original event is nested inside the payload's `value` property.
 spokes.subscribeAll((payload) => {
-  const { topic, event, data } = payload.data;
-  console.log(topic, event, data);
+  const { topic, key, value } = payload.value;
+  console.log(topic, key, value);
 });
 ```
 

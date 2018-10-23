@@ -14,7 +14,6 @@ export default class Broker {
   constructor({ keepHistory = DEFAULT_OPTIONS.keepHistory } = {}) {
     this.topics = new List();
     this.keepHistory = keepHistory;
-    // this.history = new ValueStack();
     this.globalTopic = this.registerTopic(GLOBAL_TOPIC);
   }
 
@@ -28,9 +27,9 @@ export default class Broker {
     const topic = new Topic(name, options);
       
     if (name !== GLOBAL_TOPIC) {
-      topic.subscribe(({ topic, event, data }, subscription) => {
-        debug('topic',  topic, 'event', event, 'data', data)
-        this.globalTopic.publish(`${topic}:${event}`, { topic, event, data })
+      topic.subscribe(({ key, value }, subscription) => {
+        debug('topic', subscription.topic.name, 'key', key, 'value', value)
+        this.globalTopic.publish(`${subscription.topic.name}:${key}`, { topic: subscription.topic.name, key, value })
       });
     }
 

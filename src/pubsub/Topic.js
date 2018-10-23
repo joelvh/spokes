@@ -25,24 +25,24 @@ export default class Topic {
     this.subscriptions.push(subscription);
 
     if (withLastEvent && this.history.length)  {
-      const [event, data] = this.history[this.history.length - 1];
-      subscription.publish({ topic: this.name, event, data });
+      const [key, value] = this.history[this.history.length - 1];
+      subscription.publish({ key, value });
     }
 
     return subscription;
   }
 
-  publish(event, data) {
-    debug(`Topic(${this.name}).publish`, event, data);
+  publish(key, value) {
+    debug(`Topic(${this.name}).publish`, key, value);
     // Clear history if we don't keep it
     if (!this.keepHistory) {
       this.history.length = 0;
     }
 
     // Store last event in case a subscriber uses `withLastEvent` option
-    this.history.push([event, data]);
+    this.history.push([key, value]);
     // Make sure the published data is a copy
-    this.subscriptions.forEach(subscription => subscription.publish({ topic: this.name, event, data }));
+    this.subscriptions.forEach(subscription => subscription.publish({ key, value }));
   }
 
   unsubscribe(subscription) {

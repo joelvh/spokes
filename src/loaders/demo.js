@@ -15,12 +15,12 @@ window.dataLayer = [];
     Demo subscribing to lifecycle event
 */
 
-spokes.when('Page', 'QueryStringParsed').then(({ data }) => debug('DEMO: lifecycle loaded Page:QueryStringParsed:', data));
+spokes.when('Page', 'QueryStringParsed').then(({ value }) => debug('DEMO: lifecycle loaded Page:QueryStringParsed:', value));
 
 // Demo subscribing to pub/sub event, specifically a state change for a specific value
 
-spokes.subscribe('StateChanged', ({ event }) => {
-  if (event == 'QueryString')  {
+spokes.subscribe('StateChanged', ({ key }) => {
+  if (key == 'QueryString')  {
     spokes.getState('QueryString').pairs().forEach(pair => {
       const [key, values] = pair;
       values.forEach(value => debug('DEMO: [QueryString]', key, '=>', value));
@@ -33,27 +33,27 @@ spokes.subscribe('StateChanged', ({ event }) => {
 */
 
 spokes.subscribeAll((payload) => {
-  const { topic, event, data } = payload.data;
+  const { topic, key, value } = payload.value;
   const html = [];
 
   html.push('<td><strong>' + topic + '</strong></td>');
-  html.push('<td><strong>' + event + '</strong></td>');
+  html.push('<td><strong>' + key + '</strong></td>');
   html.push('<td>');
 
-  if (data === undefined || data === null) {
-    html.push(data + '');
-  } else if (['String', 'Number', 'Array'].indexOf(data.constructor.name) != -1) {
-    html.push(data);
-  } else if (data.serialize) {
-    html.push(JSON.stringify(data.serialize()));
-  } else if (data.toString() === "[object Object]") {
-    html.push(JSON.stringify(data));
-  } else if (data.topic) {
-    html.push('<em>' + data.constructor.name + '(topic: ' + data.topic.name + ')</em>');
-  } else if (data.name) {
-    html.push('<em>' + data.constructor.name + '(name: ' + data.name + ')</em>');
+  if (value === undefined || value === null) {
+    html.push(value + '');
+  } else if (['String', 'Number', 'Array'].indexOf(value.constructor.name) != -1) {
+    html.push(value);
+  } else if (value.serialize) {
+    html.push(JSON.stringify(value.serialize()));
+  } else if (value.toString() === "[object Object]") {
+    html.push(JSON.stringify(value));
+  } else if (value.topic) {
+    html.push('<em>' + value.constructor.name + '(topic: ' + value.topic.name + ')</em>');
+  } else if (value.name) {
+    html.push('<em>' + value.constructor.name + '(name: ' + value.name + ')</em>');
   } else {
-    html.push('<em>[' + data.constructor.name + ']</em>');
+    html.push('<em>[' + value.constructor.name + ']</em>');
   }
 
   html.push('</td>');

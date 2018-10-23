@@ -39,28 +39,28 @@ export default class Spokes {
 
   // State
 
-  setState(name, value) {
-    debug('Spokes.setState', name, value);
-    this.stateStack.append(name, value);
-    this.stateTopic.publish(name, value);
+  setState(key, value) {
+    debug('Spokes.setState', key, value);
+    this.stateStack.append(key, value);
+    this.stateTopic.publish(key, value);
   }
 
-  getState(name) {
-    debug('Spokes.getState', name);
-    return this.stateStack.fetch(name).pop();
+  getState(key) {
+    debug('Spokes.getState', key);
+    return this.stateStack.fetch(key).pop();
   }
 
   // Pub/Sub
 
-  subscribe(topicName, handler, options) {
-    return this.broker.topic(topicName).subscribe(handler, options);
+  subscribe(topic, handler, options) {
+    return this.broker.topic(topic).subscribe(handler, options);
   }
 
   subscribeAll(handler, options) {
     return this.broker.globalTopic.subscribe(handler, options);
   }
 
-  publish(topic, event, data) {
-    this.broker.topic(topic).publish(event, data);
+  publish(topic, key, value) {
+    this.broker.topic(topic).publish(key, value);
   }
 }
