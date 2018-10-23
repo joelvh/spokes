@@ -7,8 +7,6 @@ import Analytics from '../lifecycle/Analytics';
 
 const spokes = new Spokes();
 
-spokes.register(new Page(document));
-spokes.register(new User());
-spokes.register(new Analytics(window));
+spokes.registerLifecycle('Page', lifecycle => new Page(document).load(lifecycle));
 
 window._spokes = spokes;

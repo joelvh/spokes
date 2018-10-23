@@ -1,5 +1,6 @@
 import List from '../lib/List';
 import Topic from './Topic';
+import debug from '../dom/debug';
 // import ValueStack from '../lib/ValueStack';
 
 const GLOBAL_TOPIC = '*';
@@ -14,6 +15,26 @@ export default class Broker {
     this.topics = new List();
     this.keepHistory = keepHistory;
     // this.history = new ValueStack();
+    this.globalTopic = this.registerTopic(GLOBAL_TOPIC);
+  }
+
+  registerTopic(name, options) {
+    debug('Broker.registerTopic('+name+')', options);
+
+    if (this.topics.has(name)) {
+      throw new Error('Topic already registered: '+name);
+    }
+
+    const topic = new Topic(name, options);
+      
+    if (name !== GLOBAL_TOPIC) {
+      topic.subscribe(({ topic, event, data }, subscription) => {
+        debug('topic',  topic, 'event', event, 'data', data)
+        this.globalTopic.publish(`${topic}:${event}`, { topic, event, data })
+      });
+    }
+
+    return this.topics.add(name, topic);
   }
 
   topic(topicName) {
@@ -22,30 +43,9 @@ export default class Broker {
     if (this.topics.has(topicName)) {
       topic = this.topics.fetch(topicName);
     } else {
-      topic = this.topics.add(topicName, new Topic(topicName, { keepHistory: this.keepHistory }));
-      
-      if (topicName !== GLOBAL_TOPIC) {
-        topic.subscribe((...args) => {
-          // remove subscription, which is passed to unsubscribe
-          const subscription = args.pop();
-          return this.publish(GLOBAL_TOPIC, topicName, ...args);
-        });
-      }
+      topic = this.registerTopic(topicName, { keepHistory: this.keepHistory });
     }
 
     return topic;
-  }
-
-  subscribe(topicName, handler, ...args) {
-    return this.topic(topicName).subscribe(handler, ...args);
-  }
-
-  subscribeAll(handler, ...args) {
-    return this.topic(GLOBAL_TOPIC).subscribe(handler, ...args);
-  }
-
-  publish(topicName, ...payload) {
-    // this.history.append(topicName, payload);
-    return this.topic(topicName).publish(...payload);
   }
 }

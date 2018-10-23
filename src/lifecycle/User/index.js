@@ -1,10 +1,10 @@
 export default class User {
-  register(spokes) {
-    spokes.registerLifecycleEvent('User:SessionStarted', (resolve, reject) => {
+  load(lifecycle) {
+    lifecycle.registerEvent('SessionStarted', (resolve, reject) => {
       // TODO
     });
 
-    spokes.registerLifecycleEvent('User:Identified', (resolve, reject) => {
+    lifecycle.registerEvent('Identified', (resolve, reject) => {
       // TODO
     });
   }

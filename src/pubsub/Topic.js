@@ -11,7 +11,7 @@ export default class Topic {
     return DEFAULT_OPTIONS;
   }
 
-  constructor(name, { keepHistory = DEFAULT_OPTIONS.keepHistory } = {}) {
+  constructor(name, { keepHistory } = DEFAULT_OPTIONS) {
     this.name = name;
     this.keepHistory = keepHistory;
     this.history = [];
@@ -20,30 +20,33 @@ export default class Topic {
   subscriptions = [];
 
   subscribe(handler, { withLastEvent = DEFAULT_OPTIONS.withLastEvent } = {}) {
-    debug(`Topic(${this.name})`, 'subscribe(handler)');
+    debug(`Topic(${this.name}).subscribe`);
     const subscription = new Subscription(this, handler);
     this.subscriptions.push(subscription);
 
     if (withLastEvent && this.history.length)  {
-      subscription.publish(...this.history[this.history.length - 1]);
+      const [event, data] = this.history[this.history.length - 1];
+      subscription.publish({ topic: this.name, event, data });
     }
 
     return subscription;
   }
 
-  publish(...payload) {
-    debug(`Topic(${this.name})`, 'publish(payload)', ...payload);
+  publish(event, data) {
+    debug(`Topic(${this.name}).publish`, event, data);
     // Clear history if we don't keep it
     if (!this.keepHistory) {
       this.history.length = 0;
     }
+
     // Store last event in case a subscriber uses `withLastEvent` option
-    this.history.push(payload);
-    this.subscriptions.forEach(subscription => subscription.publish(...payload));
+    this.history.push([event, data]);
+    // Make sure the published data is a copy
+    this.subscriptions.forEach(subscription => subscription.publish({ topic: this.name, event, data }));
   }
 
   unsubscribe(subscription) {
-    debug(`Topic(${this.name})`, 'unsubscribe(subscription)');
+    debug(`Topic(${this.name}).unsubscribe`);
     const index = this.subscriptions.indexOf(subscription);
 
     if (index != -1) {

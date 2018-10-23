@@ -5,30 +5,25 @@ export default class Page {
     this.document = document;
   }
 
-  register(spokes) {
-    const document = this.document;
-
+  load(lifecycle) {
     // Page load
-
-    spokes.registerLifecycleEvent('Page:Loaded', (resolve, reject) => {
-      const resolver = () => resolve(document);
+    lifecycle.registerEvent('Loaded', (resolve, reject) => {
+      const resolver = () => resolve(this.document);
     
       if (this.loaded()) {
         resolver();
       } else {
-        document.addEventListener("DOMContentLoaded", resolver);
+        this.document.addEventListener("DOMContentLoaded", resolver);
       }
     });
 
     // Query string parsing
-
-    spokes.registerLifecycleEvent('Page:QueryStringParsed', (resolve, reject) => {
-      spokes.lifecycle('Page:Loaded').then(document => resolve(parseQueryString(document.location.search))).catch(reject);
+    lifecycle.registerEvent('QueryStringParsed', (resolve, reject) => {
+      lifecycle.when('Loaded').then(document => resolve(parseQueryString(document.location.search))).catch(reject);
     });
 
     // Query string state storage
-
-    spokes.lifecycle('Page:QueryStringParsed').then(qs => spokes.setState('QueryString', qs));
+    lifecycle.when('QueryStringParsed').then(qs => lifecycle.spokes.setState('QueryString', qs));
   }
 
   loaded() {

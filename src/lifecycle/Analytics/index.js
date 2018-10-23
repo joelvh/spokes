@@ -6,8 +6,8 @@ export default class Analytics {
     this.dataLayer = new DataLayer(window);
   }
 
-  register(spokes) {
-    spokes.registerLifecycleEvent('Analytics:Loaded', (resolve, reject) => {
+  load(lifecycle) {
+    lifecycle.registerEvent('Loaded', (resolve, reject) => {
       // TODO
     });
   }

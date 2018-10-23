@@ -1,6 +1,6 @@
 {
   "name": "spokes",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Pub/sub for coordinating webpage events with frameworks and 3rd parties",
   "homepage": "https://github.com/joelvh/spokes",
   "author": "Joel Van Horn",
@@ -12,13 +12,13 @@
   "bugs": {
     "url": "https://github.com/joelvh/spokes/issues"
   },
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "serve-webpack": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
     "build-webpack": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
     "serve-rollup": "ENTRY=demo OPEN=true rollup -c rollup.config.js --external all",
     "build-rollup": "rollup -c rollup.config.js --external all && ENTRY=demo rollup -c rollup.config.js --external all",
-    "build": "npm run webpack-build && npm run rollup-build"
+    "build": "npm run build-webpack && npm run build-rollup"
   },
   "browserslist": [
     "ie 11"

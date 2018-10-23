@@ -5,6 +5,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700' rel='stylesheet' type='text/css'>
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <script>
+    // DEMO: Delete these to simulate needing a polyfill
     delete window.Promise;
     delete Object.create;
     </script>
@@ -41,8 +42,9 @@
         <table>
             <thead>
                 <tr>
+                    <th>Topic</th>
                     <th>Event</th>
-                    <th>Payload</th>
+                    <th>Data</th>
                 </tr>
             </thead>
             <tbody id="list">

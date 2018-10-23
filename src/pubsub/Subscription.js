@@ -14,18 +14,18 @@ export default class Subscription {
     return this.topic.unsubscribe(this);
   }
 
-  publish(...payload) {
+  publish(payload) {
+    debug('Subscription('+this.topic.name+').publish', payload);
+
     if (!this.unsubscribed) {
-      debug('Subscription('+this.topic.name+')', 'publish', ...payload);
       try {
-        this.handler(...payload, this);
+        this.handler(payload, this);
         return true;
       } catch(ex) {
         error(ex);
         return ex;
       }
     } else {
-      debug('Subscription('+this.topic.name+')', 'publish(unsubscribed)', ...payload);
       return false;
     }
   }
