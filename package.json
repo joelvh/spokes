@@ -1,18 +1,15 @@
 {
   "name": "spokes",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Pub/sub for coordinating webpage events with frameworks and 3rd parties",
   "homepage": "https://github.com/joelvh/spokes",
   "author": "Joel Van Horn",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joelvh/spokes.git"
-  },
+  "repository": "https://github.com/joelvh/spokes.git",
   "bugs": {
     "url": "https://github.com/joelvh/spokes/issues"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "serve-webpack": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
     "build-webpack": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
