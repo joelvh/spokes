@@ -14,11 +14,11 @@ Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spo
 ## Development
 
 - Run `npm install` to get all dependencies installed.
-- Run `npm run start` to view the [demo](./src/demo.js).
+- Run `npm run serve-webpack` to view the [demo](./src/demo.js).
     - Then click this demo link with UTM parameters: http://localhost:8080/?utm_campaign=my%20campaign&utm_medium=email
 - Run `npm run build` to build the bundle for production.
-    - `build/demo.bundle.js` contains the demo code.
-    - `build/main.bundle.js` contains the bundle to be included for global `window._spokes` access.
+    - `build/webpack/js/demo.bundle.js` and `build/rollup/js/demo.bundle.js` contain the demo code.
+    - `build/webpack/js/main.bundle.js` and `build/rollup/js/main.bundle.js` contain the bundle to be included for global `window._spokes` access.
 
 ### TODO
 
