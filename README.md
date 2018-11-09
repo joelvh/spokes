@@ -59,14 +59,14 @@ You can easily coordinate events and data between components with publish/subscr
 // Spokes emits automatically. Note that the last argument is a
 // `Subscription` instance, which allows you to call
 // `subscription.unsubscribe()` to unsubscribe.
-spokes.subscribe('Page', ({ topic, event, value }, subscription) => {
-  if (event == 'Loaded') console.log('Page:Loaded fired', value);
+spokes.subscribe('Page', ({ key, value }, subscription) => {
+  if (key == 'Loaded') console.log('Page:Loaded fired', value);
 });
 
 // You can also subscribe and receive the last event published to the
 // topic in case you missed it, using  the `withLastEvent` option.
-spokes.subscribe('Page', document => {
-  if (event == 'Loaded') console.log('Page:Loaded fired', document);
+spokes.subscribe('Page', ({ key, value }) => {
+  if (key == 'Loaded') console.log('Page:Loaded fired', value);
 }, { withLastEvent: true });
 
 // Alternatively, subscribe to all topics. In this case,
@@ -90,8 +90,8 @@ It's simple to manage global state by utilizing a key/value store. Any key that 
 
 ```es6
 // Subscribe to changes to global state and filter on `UserProfile`.
-spokes.subscribe('StateChanged', ({ topic, event, data }) => {
-  if (event == 'UserProfile') console.log('User info changed', value);
+spokes.subscribe('StateChanges', ({ key, value }) => {
+  if (key == 'UserProfile') console.log('User info changed', value);
 });
 
 // Update the global state, which will publish an event to the
@@ -121,7 +121,7 @@ spokes.registerLifecycle('Page', lifecycle => new Page(document).load(lifecycle)
 // available. This is different from subscribing to pub/sub because
 // if you subscribe to a pub/sub topic too late, you may miss events.
 // Note: `when` returns a Promise, for which you can call `then` or  `catch`.
-spokes.when('Page', 'Loaded').then(({ topic, event, data }) => console.log('Page:Loaded resolved'));
+spokes.when('Page', 'Loaded').then(document => console.log('Page:Loaded resolved'));
 
 // Here's an example of registering a lifecycle event, such as telling other components
 // when your SPA is loaded and  ready.
