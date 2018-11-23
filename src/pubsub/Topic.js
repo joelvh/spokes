@@ -1,5 +1,4 @@
 import Subscription from './Subscription';
-import debug from '../dom/debug';
 
 const DEFAULT_OPTIONS = {
   keepHistory: false,
@@ -20,7 +19,6 @@ export default class Topic {
   subscriptions = [];
 
   subscribe(handler, { withLastEvent = DEFAULT_OPTIONS.withLastEvent } = {}) {
-    debug(`Topic(${this.name}).subscribe`);
     const subscription = new Subscription(this, handler);
     this.subscriptions.push(subscription);
 
@@ -33,7 +31,6 @@ export default class Topic {
   }
 
   publish(key, value) {
-    debug(`Topic(${this.name}).publish`, key, value);
     // Clear history if we don't keep it
     if (!this.keepHistory) {
       this.history.length = 0;
@@ -46,7 +43,6 @@ export default class Topic {
   }
 
   unsubscribe(subscription) {
-    debug(`Topic(${this.name}).unsubscribe`);
     const index = this.subscriptions.indexOf(subscription);
 
     if (index != -1) {

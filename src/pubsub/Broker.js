@@ -1,6 +1,5 @@
 import List from '../lib/List';
 import Topic from './Topic';
-import debug from '../dom/debug';
 // import ValueStack from '../lib/ValueStack';
 
 const GLOBAL_TOPIC = '*';
@@ -18,8 +17,6 @@ export default class Broker {
   }
 
   registerTopic(name, options) {
-    debug('Broker.registerTopic('+name+')', options);
-
     if (this.topics.has(name)) {
       throw new Error('Topic already registered: '+name);
     }
@@ -28,7 +25,6 @@ export default class Broker {
       
     if (name !== GLOBAL_TOPIC) {
       topic.subscribe(({ key, value }, subscription) => {
-        debug('topic', subscription.topic.name, 'key', key, 'value', value)
         this.globalTopic.publish(`${subscription.topic.name}:${key}`, { topic: subscription.topic.name, key, value })
       });
     }

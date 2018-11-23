@@ -6,6 +6,7 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <script>
     // DEMO: Delete these to simulate needing a polyfill
+    delete window.fetch;
     delete window.Promise;
     delete Object.create;
     </script>
@@ -21,6 +22,7 @@
     }
     (function(window, document) {
         var features = [];
+        ('fetch' in window) || features.push('fetch');
         ('Promise' in window) || features.push('Promise');
         ('create' in Object) || features.push('Object.create');
 

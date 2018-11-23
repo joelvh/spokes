@@ -1,5 +1,4 @@
 import List from '../lib/List';
-import debug from '../dom/debug';
 
 export default class Lifecycle {
   constructor(name, topic, spokes) {
@@ -10,8 +9,6 @@ export default class Lifecycle {
   }
 
   registerEvent(name, executor) {
-    debug('Lifecycle.registerEvent', name);
-
     if (this.events.has(name)) {
       throw new Error('Lifecycle event already registered: '+name);
     }
@@ -29,8 +26,6 @@ export default class Lifecycle {
   }
 
   when(name) {
-    debug('Lifecycle.when', name);
-    
     if (!this.events.has(name)) {
       throw new Error('Unknown lifecycle event name: '+name);
     }

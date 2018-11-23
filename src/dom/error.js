@@ -1,3 +1,3 @@
-import console from './console';
+const listener = (('console' in window) && ('error' in window)) ? window.console.error : (() => null);
 
-export default console.error;
+export default listener;

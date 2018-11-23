@@ -1,4 +1,3 @@
-import debug from '../dom/debug';
 import error from '../dom/error';
 
 export default class Subscription {
@@ -15,8 +14,6 @@ export default class Subscription {
   }
 
   publish(payload) {
-    debug('Subscription('+this.topic.name+').publish', payload);
-
     if (!this.unsubscribed) {
       try {
         this.handler(payload, this);

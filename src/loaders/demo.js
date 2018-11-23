@@ -1,6 +1,5 @@
 import window from '../dom/window';
 import document from '../dom/document';
-import debug from '../dom/debug';
 import './main';
 
 const spokes = window._spokes;
@@ -15,7 +14,7 @@ window.dataLayer = [];
     Demo subscribing to lifecycle event
 */
 
-spokes.when('Page', 'QueryStringParsed').then(({ value }) => debug('DEMO: lifecycle loaded Page:QueryStringParsed:', value));
+spokes.when('Page', 'QueryStringParsed').then(({ value }) => console.log('DEMO: lifecycle loaded Page:QueryStringParsed:', value));
 
 // Demo subscribing to pub/sub event, specifically a state change for a specific value
 
@@ -23,7 +22,7 @@ spokes.subscribe('StateChanged', ({ key }) => {
   if (key == 'QueryString')  {
     spokes.getState('QueryString').pairs().forEach(pair => {
       const [key, values] = pair;
-      values.forEach(value => debug('DEMO: [QueryString]', key, '=>', value));
+      values.forEach(value => console.log('DEMO: [QueryString]', key, '=>', value));
     });
   }
 });

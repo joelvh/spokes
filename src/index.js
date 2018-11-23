@@ -1,7 +1,6 @@
 import List from './lib/List';
 import ValueStack from './lib/ValueStack';
 import Broker from './pubsub/Broker';
-import debug from './dom/debug';
 import Lifecycle from './Lifecycle';
 
 export default class Spokes {
@@ -16,8 +15,6 @@ export default class Spokes {
   // Lifecycle event resolving
 
   registerLifecycle(name, startLifecycle) {
-    debug('Spokes.registerLifecycle', name);
-    
     if (this.lifecycles.has(name)) {
       throw new Error('Lifecycle already registered: '+name);
     }
@@ -33,20 +30,17 @@ export default class Spokes {
   }
 
   when(lifecycleName, eventName) {
-    debug('Spokes.when', lifecycleName, eventName);
     return this.lifecycles.fetch(lifecycleName).when(eventName);
   }
 
   // State
 
   setState(key, value) {
-    debug('Spokes.setState', key, value);
     this.stateStack.append(key, value);
     this.stateTopic.publish(key, value);
   }
 
   getState(key) {
-    debug('Spokes.getState', key);
     return this.stateStack.fetch(key).pop();
   }
 
