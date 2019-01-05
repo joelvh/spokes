@@ -11,6 +11,7 @@ import minify from 'rollup-plugin-babel-minify'
 import gzipPlugin from 'rollup-plugin-gzip'
 import hash from 'rollup-plugin-hash'
 // import livereload from 'rollup-plugin-livereload'
+// import standard from 'rollup-plugin-standard'
 
 const entryName = process.env.ENTRY || 'main'
 const openBrowser = process.env.OPEN === 'true'
@@ -50,5 +51,6 @@ export default {
       host: 'localhost',
       port: 8080
     })
+    // standard( /* options */ )
   ]
 }
