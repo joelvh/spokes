@@ -3,15 +3,15 @@
 */
 
 export default class DataLayer {
-  constructor(window) {
-    this.window = window;
+  constructor (window) {
+    this.window = window
   }
 
-  get queue() {
+  get queue () {
     if (!this.window.dataLayer) {
-      this.window.dataLayer = [];
+      this.window.dataLayer = []
     }
-    
-    return this.window.dataLayer;
+
+    return this.window.dataLayer
   }
 }

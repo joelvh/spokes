@@ -1,3 +1,3 @@
-import window from './window';
+import window from './window'
 
-export default window.Promise;
+export default window.Promise

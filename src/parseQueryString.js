@@ -1,22 +1,22 @@
-import ValueStack from './lib/ValueStack';
-import decodeURIComponent from './dom/decodeURIComponent';
+import ValueStack from './lib/ValueStack'
+import decodeURIComponent from './dom/decodeURIComponent'
 
 // See: https://gist.github.com/cougrimes/491c9cbe3d397f8ccc94
-export default function parseQueryString(querystring) {
-  const result = new ValueStack();
+export default function parseQueryString (querystring) {
+  const result = new ValueStack()
 
-  querystring.replace(/^[\?]*/, '')
-             .replace(/(?:([^=&]+)(?:=([^&]*))?)/g, function(substring, key, value, index, string) {
-               result.append(decode(key), decode(value));
-             });
+  querystring.replace(/^\?*/, '')
+    .replace(/(?:([^=&]+)(?:=([^&]*))?)/g, function (substring, key, value, index, string) {
+      result.append(decode(key), decode(value))
+    })
 
-  return result;
+  return result
 }
 
-function decode(value) {
+function decode (value) {
   if (value === undefined) {
-    return null;
+    return null
   } else {
-    return decodeURIComponent(value.replace(/\+/g, ' '));
+    return decodeURIComponent(value.replace(/\+/g, ' '))
   }
 }

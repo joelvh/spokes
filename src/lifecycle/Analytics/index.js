@@ -1,14 +1,14 @@
-import DataLayer from './DataLayer';
+import DataLayer from './DataLayer'
 
 export default class Analytics {
-  constructor(window) {
-    this.window = window;
-    this.dataLayer = new DataLayer(window);
+  constructor (window) {
+    this.window = window
+    this.dataLayer = new DataLayer(window)
   }
 
-  load(lifecycle) {
+  load (lifecycle) {
     lifecycle.registerEvent('Loaded', (resolve, reject) => {
       // TODO
-    });
+    })
   }
 }
