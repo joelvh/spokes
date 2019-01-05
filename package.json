@@ -11,11 +11,11 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "serve-webpack": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
-    "build-webpack": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
-    "serve-rollup": "ENTRY=demo OPEN=true rollup -c rollup.config.js --external all",
-    "build-rollup": "rollup -c rollup.config.js --external all && ENTRY=demo rollup -c rollup.config.js --external all",
-    "build": "npm run build-webpack && npm run build-rollup"
+    "webpack": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
+    "rollup": "ENTRY=demo OPEN=true rollup -c rollup.config.js --external all",
+    "build:webpack": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
+    "build:rollup": "rollup -c rollup.config.js --external all && ENTRY=demo rollup -c rollup.config.js --external all",
+    "build": "yarn build:webpack && yarn build:rollup"
   },
   "browserslist": [
     "ie 11"
