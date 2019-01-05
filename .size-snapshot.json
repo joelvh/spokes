@@ -1,12 +1,12 @@
 {
   "build/rollup/js/demo.bundle.js": {
-    "bundled": 14279,
-    "minified": 9115,
-    "gzipped": 2869
+    "bundled": 11085,
+    "minified": 7897,
+    "gzipped": 2599
   },
   "build/rollup/js/main.bundle.js": {
-    "bundled": 12048,
-    "minified": 7672,
-    "gzipped": 2343
+    "bundled": 9795,
+    "minified": 6964,
+    "gzipped": 2271
   }
 }
