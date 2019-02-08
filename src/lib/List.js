@@ -2,17 +2,20 @@ export default class List {
   keys = [];
   values = [];
 
+  index (key) {
+    return this.keys.indexOf(key)
+  }
+
   has (key) {
-    return this.keys.indexOf(key) !== -1
+    return this.index(key) !== -1
   }
 
   pairs () {
-    const values = this.values
-    return this.keys.map((key, index) => [key, values[index]])
+    return this.keys.map((key, index) => [key, this.values[index]])
   }
 
   add (key, value) {
-    const index = this.keys.indexOf(key)
+    const index = this.index(key)
 
     if (index !== -1) {
       this.values[index] = value
@@ -24,13 +27,29 @@ export default class List {
     return value
   }
 
-  fetch (key) {
-    const index = this.keys.indexOf(key)
+  remove (key) {
+    const index = this.index(key)
+
+    // remove the existing value history before appending
+    if (index === -1) {
+      return null
+    }
+
+    const value = this.fetch(key)
+
+    this.keys.splice(index, 1)
+    this.values.splice(index, 1)
+
+    return value
+  }
+
+  fetch (key, fallback = null) {
+    const index = this.index(key)
 
     if (index !== -1) {
       return this.values[index]
     } else {
-      return []
+      return typeof fallback === 'function' ? fallback(key) : fallback
     }
   }
 

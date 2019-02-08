@@ -26,10 +26,6 @@ export default class Lifecycle {
   }
 
   when (name) {
-    if (!this.events.has(name)) {
-      throw new Error('Unknown lifecycle event name: ' + name)
-    }
-
-    return this.events.fetch(name)
+    return this.events.fetch(name, () => { throw new Error('Unknown lifecycle event name: ' + name) })
   }
 }
