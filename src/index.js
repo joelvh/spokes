@@ -41,7 +41,8 @@ export default class Spokes {
   }
 
   getState (key) {
-    return this.stateStack.fetch(key).pop()
+    const value = this.stateStack.fetch(key)
+    return value.length > 0 ? value.pop() : null
   }
 
   // Pub/Sub

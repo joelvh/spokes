@@ -13,14 +13,9 @@ export default class ValueStack extends List {
   }
 
   add (key, value) {
-    let values
+    const values = [...this.fetch(key, []), value]
 
-    if (this.has(key)) {
-      values = this.fetch(key)
-      values.push(value)
-    } else {
-      values = super.add(key, [value])
-    }
+    super.add(key, values)
 
     return copy(values)
   }
@@ -29,7 +24,7 @@ export default class ValueStack extends List {
     return copy(super.remove(key))
   }
 
-  fetch (key) {
-    return copy(super.fetch(key))
+  fetch (key, fallback = null) {
+    return copy(super.fetch(key, fallback))
   }
 }

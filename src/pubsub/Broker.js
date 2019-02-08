@@ -33,14 +33,6 @@ export default class Broker {
   }
 
   topic (topicName) {
-    var topic
-
-    if (this.topics.has(topicName)) {
-      topic = this.topics.fetch(topicName)
-    } else {
-      topic = this.registerTopic(topicName, { keepHistory: this.keepHistory })
-    }
-
-    return topic
+    return this.topics.fetch(topicName, () => this.registerTopic(topicName, { keepHistory: this.keepHistory }))
   }
 }

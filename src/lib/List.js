@@ -43,13 +43,13 @@ export default class List {
     return value
   }
 
-  fetch (key) {
+  fetch (key, fallback = null) {
     const index = this.index(key)
 
     if (index !== -1) {
       return this.values[index]
     } else {
-      return null
+      return typeof fallback === 'function' ? fallback(key) : fallback
     }
   }
 
