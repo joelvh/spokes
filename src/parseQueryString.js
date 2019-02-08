@@ -7,7 +7,7 @@ export default function parseQueryString (querystring) {
 
   querystring.replace(/^\?*/, '')
     .replace(/(?:([^=&]+)(?:=([^&]*))?)/g, function (substring, key, value, index, string) {
-      result.append(decode(key), decode(value))
+      result.add(decode(key), decode(value))
     })
 
   return result

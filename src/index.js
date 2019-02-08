@@ -36,12 +36,14 @@ export default class Spokes {
   // State
 
   setState (key, value) {
-    this.stateStack.append(key, value)
+    this.stateStack.add(key, value)
     this.stateTopic.publish(key, value)
   }
 
   getState (key) {
-    return this.stateStack.fetch(key).pop()
+    const history = this.stateStack.fetch(key)
+    // get the last value that was set
+    return history.length ? history[history.length - 1] : null
   }
 
   // Pub/Sub

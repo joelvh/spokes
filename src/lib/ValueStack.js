@@ -1,30 +1,35 @@
 import List from './List'
 
+function copy (array) {
+  return array ? array.slice() : []
+}
+
 /*
     Appends values rather than  overwriting
 */
 export default class ValueStack extends List {
-  add (key, value) {
-    const index = this.keys.indexOf(key)
-
-    if (index !== -1) {
-      this.keys.splice(index, 1)
-      this.values.splice(index, 1)
-    }
-
-    return this.append(key, value)
+  pairs () {
+    return super.pairs().map(([key, value]) => [key, copy(value)])
   }
 
-  append (key, value) {
-    var index = this.keys.indexOf(key)
+  add (key, value) {
+    let values
 
-    if (index === -1) {
-      this.keys.push(key)
-      index = this.values.push([value]) - 1
+    if (this.has(key)) {
+      values = this.fetch(key)
+      values.push(value)
     } else {
-      this.values[index].push(value)
+      values = super.add(key, [value])
     }
 
-    return this.values[index].slice()
+    return copy(values)
+  }
+
+  remove (key) {
+    return copy(super.remove(key))
+  }
+
+  fetch (key) {
+    return copy(super.fetch(key))
   }
 }
