@@ -1,6 +1,9 @@
-import { document } from '../dom/window'
+/* global window */
+
 import './main'
 
+const { document } = window
+const { createElement, getElementById } = document
 const spokes = window._spokes
 
 /*
@@ -56,8 +59,8 @@ spokes.subscribeAll((payload) => {
 
   html.push('</td>')
 
-  const tr = document.createElement('tr')
+  const tr = createElement('tr')
   tr.innerHTML = html.join('')
 
-  document.getElementById('list').appendChild(tr)
+  getElementById('list').appendChild(tr)
 })

@@ -1,5 +1,6 @@
 import ValueStack from './lib/ValueStack'
-import { decodeURIComponent } from './dom/window'
+
+const { decodeURIComponent } = window
 
 // See: https://gist.github.com/cougrimes/491c9cbe3d397f8ccc94
 export default function parseQueryString (querystring) {

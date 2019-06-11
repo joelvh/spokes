@@ -1,5 +1,6 @@
-import { Promise } from '../dom/window'
 import List from '../lib/List'
+
+const { Promise } = window || global
 
 export default class Lifecycle {
   constructor (name, topic, spokes) {
