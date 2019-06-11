@@ -1,4 +1,4 @@
-import error from '../dom/error'
+import error from '../error'
 
 export default class Subscription {
   constructor (topic, handler) {
