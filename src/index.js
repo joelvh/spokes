@@ -2,14 +2,18 @@ import List from './lib/List'
 import ValueStack from './lib/ValueStack'
 import Broker from './pubsub/Broker'
 import Lifecycle from './Lifecycle'
+import { DEFAULT_OPTIONS } from './pubsub/settings'
+
+const STATE_TOPIC = 'StateChanges'
 
 export default class Spokes {
   constructor (options = {}) {
+    this.settings = { ...DEFAULT_OPTIONS, ...options }
     this.broker = new Broker(options)
     this.lifecycles = new List()
     this.stateStack = new ValueStack()
 
-    this.stateTopic = this.broker.registerTopic('StateChanges')
+    this.stateTopic = this.broker.registerTopic(STATE_TOPIC)
   }
 
   // Lifecycle event resolving
@@ -36,8 +40,11 @@ export default class Spokes {
   // State
 
   setState (key, value) {
-    this.stateStack.add(key, value)
-    this.stateTopic.publish(key, value)
+    // only update state if the value changed
+    if (this.isChanged(key, value)) {
+      this.stateStack.add(key, value)
+      this.stateTopic.publish(key, value)
+    }
   }
 
   getState (key) {
@@ -57,5 +64,9 @@ export default class Spokes {
 
   publish (topic, key, value) {
     return this.broker.topic(topic).publish(key, value)
+  }
+
+  isChanged (key, value) {
+    return this.settings.comparer(this.getState(key), value)
   }
 }

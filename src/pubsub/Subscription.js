@@ -1,12 +1,12 @@
 import error from '../error'
 
 export default class Subscription {
+  unsubscribed = false
+
   constructor (topic, handler) {
     this.topic = topic
     this.handler = handler
   }
-
-  unsubscribed = false;
 
   unsubscribe () {
     this.unsubscribed = true
@@ -14,16 +14,16 @@ export default class Subscription {
   }
 
   publish (payload) {
-    if (!this.unsubscribed) {
-      try {
-        this.handler(payload, this)
-        return true
-      } catch (ex) {
-        error(ex)
-        return ex
-      }
-    } else {
+    if (this.unsubscribed) {
       return false
+    }
+
+    try {
+      this.handler(payload, this)
+      return true
+    } catch (ex) {
+      error(ex)
+      return ex
     }
   }
 }
