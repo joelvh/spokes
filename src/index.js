@@ -4,8 +4,8 @@ import Broker from './pubsub/Broker'
 import Lifecycle from './Lifecycle'
 
 export default class Spokes {
-  constructor () {
-    this.broker = new Broker()
+  constructor (options = {}) {
+    this.broker = new Broker(options)
     this.lifecycles = new List()
     this.stateStack = new ValueStack()
 
