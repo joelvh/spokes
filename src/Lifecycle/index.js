@@ -1,3 +1,4 @@
+import { Promise } from '../dom/window'
 import List from '../lib/List'
 
 export default class Lifecycle {

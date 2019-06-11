@@ -1,5 +1,4 @@
-import window from '../dom/window'
-import document from '../dom/document'
+import window, { document } from '../dom/window'
 import Spokes from '..'
 import Page from '../lifecycle/Page'
 

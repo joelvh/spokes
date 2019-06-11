@@ -1,3 +1,3 @@
-const listener = (('console' in window) && ('error' in window)) ? window.console.error : () => null
+import { console } from './window'
 
-export default listener
+export default ('error' in console) ? console.error : () => null

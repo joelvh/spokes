@@ -1,5 +1,4 @@
-import window from '../dom/window'
-import document from '../dom/document'
+import { document } from '../dom/window'
 import './main'
 
 const spokes = window._spokes
