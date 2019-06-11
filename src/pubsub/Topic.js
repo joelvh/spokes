@@ -2,7 +2,9 @@ import Subscription from './Subscription'
 
 const DEFAULT_OPTIONS = {
   keepHistory: false,
-  withLastEvent: false
+  withLastEvent: false,
+  onlyChanged: false,
+  comparer: (a, b) => a === b
 }
 
 export default class Topic {
@@ -51,5 +53,17 @@ export default class Topic {
     } else {
       return false
     }
+  }
+
+  lastValueFor (name) {
+    for (let i = this.history.length - 1; i >= 0; i--) {
+      if (this.history[i][0] === name) {
+        return this.history[i][1]
+      }
+    }
+  }
+
+  isChanged (name, value, { comparer = DEFAULT_OPTIONS.comparer }) {
+    return comparer(this.lastValueFor(name), value)
   }
 }
