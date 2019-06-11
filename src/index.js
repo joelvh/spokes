@@ -56,6 +56,6 @@ export default class Spokes {
   }
 
   publish (topic, key, value) {
-    this.broker.topic(topic).publish(key, value)
+    return this.broker.topic(topic).publish(key, value)
   }
 }

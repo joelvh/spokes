@@ -39,7 +39,7 @@ export default class Topic {
     // Store last event in case a subscriber uses `withLastEvent` option
     this.history.push([key, value])
     // Make sure the published data is a copy
-    this.subscriptions.forEach(subscription => subscription.publish({ key, value }))
+    return this.subscriptions.map(subscription => subscription.publish({ key, value }))
   }
 
   unsubscribe (subscription) {
