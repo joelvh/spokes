@@ -1,6 +1,6 @@
 {
   "name": "spokes",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Pub/sub for coordinating webpage events with frameworks and 3rd parties",
   "homepage": "https://github.com/joelvh/spokes",
   "author": "Joel Van Horn",
