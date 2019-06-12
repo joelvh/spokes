@@ -69,4 +69,10 @@ export default class Spokes {
   isChanged (key, value) {
     return this.settings.comparer(this.getState(key), value)
   }
+
+  debug (...messages) {
+    if (this.settings.debug && typeof console !== 'undefined') {
+      console.log('[DEBUG]', ...messages)
+    }
+  }
 }
