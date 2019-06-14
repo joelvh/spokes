@@ -20,12 +20,15 @@ Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spo
     - `build/webpack/js/demo.bundle.js` and `build/rollup/js/demo.bundle.js` contain the demo code.
     - `build/webpack/js/main.bundle.js` and `build/rollup/js/main.bundle.js` contain the bundle to be included for global `window._spokes` access.
 
+## Spokes + React
+
+Share global state and pubsub events between your webpage and your React app. Use the HOC (higher order component) and hooks from [spokes-react](https://github.com/joelvh/spokes-react) to share a Spokes instance.
+
 ### TODO
 
 - Polyfills for ES6 and other browser things that may not be supported by all (e.g. `Promise`)
 - Add GTM Data Layer integration
 - Add common analytics event integration (e.g. `track` and `identify`)
-- Add React integration to coordinate between webpage (e.g. `window._spokes`) and React components (or other SPA frameworks)
 - Evaluate if we use [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) (and related polyfill) rather than the [ValueStack](./src/Spokes/lib/ValueStack.js) internals
 - Evaluate  if we use [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) (and related polyfill) rather than the [List](./src/Spokes/lib/List.js) internals
 
