@@ -9,14 +9,19 @@
   "bugs": {
     "url": "https://github.com/joelvh/spokes/issues"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "spokes:webpack": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --devtool eval",
     "spokes:rollup": "ENTRY=demo OPEN=true rollup -c rollup.config.js --external all",
     "spokes:build": "yarn build:webpack && yarn build:rollup",
     "spokes:build:webpack": "NODE_ENV=production webpack -p --config ./webpack.config.js --devtool source-map",
     "spokes:build:rollup": "rollup -c rollup.config.js --external all && ENTRY=demo rollup -c rollup.config.js --external all",
-    "spokes:format": "standard --fix --verbose | snazzy"
+    "spokes:format": "standard --fix --verbose | snazzy",
+    "build": "babel src -d dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm version patch",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -29,6 +34,7 @@
     "ie 11"
   ],
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.1.2",
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

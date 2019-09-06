@@ -1,19 +1,11 @@
 {
   "presets": [
-    [
-      "minify",
-      {
-        "removeConsole": true,
-        "removeDebugger": true
-      }
-    ],
-    [
-      "@babel/preset-env",
-      {
-        "modules": false,
-        "useBuiltIns": "entry"
-      }
-    ]
+    ["@babel/preset-env", {
+      "targets": {
+        "esmodules": true
+      },
+      "useBuiltIns": "entry"
+    }]
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties"
