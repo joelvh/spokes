@@ -14,11 +14,6 @@ Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spo
 ## Development
 
 - Run `yarn install` to get all dependencies installed.
-- Run `yarn spokes:webpack` to view the [demo](./src/demo.js).
-    - Then click this demo link with UTM parameters: http://localhost:8080/?utm_campaign=my%20campaign&utm_medium=email
-- Run `yarn spokes:build` to build the bundle for production.
-    - `build/webpack/js/demo.bundle.js` and `build/rollup/js/demo.bundle.js` contain the demo code.
-    - `build/webpack/js/main.bundle.js` and `build/rollup/js/main.bundle.js` contain the bundle to be included for global `window._spokes` access.
 
 ### Publish to NPM
 

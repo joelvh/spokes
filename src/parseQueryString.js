@@ -1,7 +1,5 @@
 import ValueStack from './lib/ValueStack'
 
-const { unescape } = window
-
 // See: https://gist.github.com/cougrimes/491c9cbe3d397f8ccc94
 export default function parseQueryString (querystring) {
   const result = new ValueStack()

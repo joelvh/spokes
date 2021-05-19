@@ -1,7 +1,5 @@
-const { console = {} } = window || global
-
 export default function error (...args) {
-  if ('error' in console) {
+  if (typeof console !== 'undefined' && 'error' in console) {
     console.error(...args)
   }
 }
