@@ -14,7 +14,7 @@
     "spokes:format": "standard --fix --verbose | snazzy",
     "build": "babel src -d dist",
     "prepare": "npm run build",
-    "prepublishOnly": "npm version patch && git add -A src && git push && git push --tags",
+    "prepublishOnly": "npm version patch",
     "version": "git add -A src",
     "postversion": "git push && git push --tags"
   },
