@@ -18,6 +18,9 @@ function decode (value) {
   if (value === undefined) {
     return null
   } else {
-    return decodeURIComponent(value.replace(/\+/g, ' '))
+    // Use `unescape` rather than `decodeURIComponent` because
+    // the latter will cause a "URI malformed" error when
+    // something like "60% off" is not URL-encoded properly
+    return unescape(value.replace(/\+/g, ' '))
   }
 }
