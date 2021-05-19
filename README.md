@@ -20,6 +20,11 @@ Run `npm install spokes` to add this [package](https://www.npmjs.com/package/spo
     - `build/webpack/js/demo.bundle.js` and `build/rollup/js/demo.bundle.js` contain the demo code.
     - `build/webpack/js/main.bundle.js` and `build/rollup/js/main.bundle.js` contain the bundle to be included for global `window._spokes` access.
 
+### Publish to NPM
+
+- Commit all changes
+- Run `yarn publish` to specify a new version and automatically create a commit, tag and publish (`npm publish` will increment the patch without prompting for a version)
+
 ### Spokes + React
 
 Share global state and pubsub events between your webpage and your React app. Use the HOC (higher order component) and hooks from [spokes-react](https://github.com/joelvh/spokes-react) to share a Spokes instance.
